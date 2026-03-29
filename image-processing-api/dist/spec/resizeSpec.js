@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const resizeImage_1 = __importDefault(require("../src/utilities/resizeImage"));
 describe("Image Processing Function", () => {
     it("works with valid input", () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield (0, resizeImage_1.default)("images/full/fjord.jpg", "images/thumb/test.jpg", 200, 200);
+        const result = yield (0, resizeImage_1.default)("assets/full/fjord.jpg", "assets/thumb/test.jpg", 200, 200);
         expect(result).toBeTrue();
     }));
     it("fails with invalid input", () => __awaiter(void 0, void 0, void 0, function* () {

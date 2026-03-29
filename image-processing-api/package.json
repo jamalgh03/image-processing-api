@@ -2,10 +2,10 @@
   "name": "image-processing-api",
   "version": "1.0.0",
   "scripts": {
-    "start": "node -e \"require('./dist/src/index').listen(3000, () => console.log('Server running on port 3000'))\"",
+    "start": "node dist/src/index.js",
     "build": "tsc",
     "test": "npm run build && jasmine",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint src",
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {

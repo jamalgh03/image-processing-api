@@ -14,14 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const resizeImage_1 = __importDefault(require("./resizeImage"));
 const fs_1 = __importDefault(require("fs"));
-describe("Image Processing Function", () => {
-    it("resizes image successfully", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield (0, resizeImage_1.default)("images/full/fjord.jpg", "images/thumb/test.jpg", 100, 100);
-        expect(fs_1.default.existsSync("images/thumb/test.jpg")).toBeTrue();
+describe('Image Processing Function', () => {
+    it('resizes image successfully', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, resizeImage_1.default)('images/full/fjord.jpg', 'images/thumb/test.jpg', 100, 100);
+        expect(fs_1.default.existsSync('images/thumb/test.jpg')).toBeTrue();
     }));
-    it("throws error on invalid input", () => __awaiter(void 0, void 0, void 0, function* () {
+    it('throws error on invalid input', () => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            yield (0, resizeImage_1.default)("wrong.jpg", "out.jpg", 100, 100);
+            yield (0, resizeImage_1.default)('wrong.jpg', 'out.jpg', 100, 100);
         }
         catch (error) {
             expect(error).toBeTruthy();

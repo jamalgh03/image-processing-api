@@ -1,47 +1,35 @@
 import js from "@eslint/js";
 import globals from "globals";
-import pluginReact from "eslint-plugin-react";
-import json from "@eslint/json";
-import markdown from "@eslint/markdown";
-import css from "@eslint/css";
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsparser from "@typescript-eslint/parser";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
+  {
+    ignores: [
+      "image-processing-api/src/**/*.js",
+      "image-processing-api/src/**/*.d.ts",
+      "image-processing-api/dist/",
+      "image-processing-api/node_modules/",
+      "node_modules/",
+      "dist/",
+    ],
+  },
   {
     files: ["**/*.{js,mjs,cjs,jsx}"],
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: { globals: globals.browser },
   },
-  pluginReact.configs.flat.recommended,
   {
-    files: ["**/*.json"],
-    plugins: { json },
-    language: "json/json",
-    extends: ["json/recommended"],
-  },
-  {
-    files: ["**/*.jsonc"],
-    plugins: { json },
-    language: "json/jsonc",
-    extends: ["json/recommended"],
-  },
-  {
-    files: ["**/*.json5"],
-    plugins: { json },
-    language: "json/json5",
-    extends: ["json/recommended"],
-  },
-  {
-    files: ["**/*.md"],
-    plugins: { markdown },
-    language: "markdown/commonmark",
-    extends: ["markdown/recommended"],
-  },
-  {
-    files: ["**/*.css"],
-    plugins: { css },
-    language: "css/css",
-    extends: ["css/recommended"],
+    files: ["image-processing-api/src/**/*.ts"],
+    languageOptions: {
+      parser: tsparser,
+      globals: globals.node,
+    },
+    plugins: { "@typescript-eslint": tseslint },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+    },
   },
 ]);

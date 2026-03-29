@@ -19,7 +19,7 @@ const resizeImage = (inputPath, outputPath, width, height) => __awaiter(void 0, 
         return true;
     }
     catch (_a) {
-        throw new Error("Resize failed");
+        throw new Error('Resize failed');
     }
 });
 exports.default = resizeImage;

@@ -1,17 +1,19 @@
-import express from "express";
-import imagesRoute from "./routes/images";
+import express from 'express';
+import imagesRoute from './routes/images';
 
 const app = express();
-const port = 3000;
 
-app.use("/api/images", imagesRoute);
+app.use('/api/images', imagesRoute);
 
-app.get("/", (req, res) => {
-  res.send("Server is running");
+app.get('/', (req, res) => {
+  res.send('Server is running');
 });
 
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+
+if (require.main === module) {
+  app.listen(3000, () => {
+    console.log('Server running on port 3000');
+  });
+}
 
 export default app;

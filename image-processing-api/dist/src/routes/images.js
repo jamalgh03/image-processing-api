@@ -17,38 +17,46 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const resizeImage_1 = __importDefault(require("../utilities/resizeImage"));
 const router = express_1.default.Router();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filename = req.query.filename;
-    const width = parseInt(req.query.width);
-    const height = parseInt(req.query.height);
-    //  Missing filename
+    const widthStr = req.query.width;
+    const heightStr = req.query.height;
+    // Missing filename
     if (!filename) {
-        return res.status(400).send("Missing filename parameter");
+        return res.status(400).json({ error: 'Missing filename parameter' });
     }
-    //  Missing width/height
-    if (!req.query.width || !req.query.height) {
-        return res.status(400).send("Missing width or height parameters");
+    // Missing width or height
+    if (!widthStr || !heightStr) {
+        return res
+            .status(400)
+            .json({ error: 'Missing width or height parameter(s)' });
     }
-    //  Invalid values
+    // Invalid width/height values
+    const width = parseInt(widthStr, 10);
+    const height = parseInt(heightStr, 10);
     if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
-        return res.status(400).send("Invalid width or height values");
+        return res
+            .status(400)
+            .json({
+            error: 'Invalid width or height value(s). Must be positive numbers.',
+        });
     }
-    const fullPath = path_1.default.join("images/full", `${filename}.jpg`);
-    const thumbPath = path_1.default.join("images/thumb", `${filename}_${width}_${height}.jpg`);
-    //  File not found
+    const fullPath = path_1.default.join('assets/full', `${filename}.jpg`);
+    const thumbPath = path_1.default.join('assets/thumb', `${filename}_${width}_${height}.jpg`);
+    // Image file does not exist
     if (!fs_1.default.existsSync(fullPath)) {
-        return res.status(404).send("Image not found");
+        return res.status(404).json({ error: 'Image file not found' });
     }
     try {
-        // cache
+        // Serve from cache if exists
         if (fs_1.default.existsSync(thumbPath)) {
             return res.sendFile(path_1.default.resolve(thumbPath));
         }
         yield (0, resizeImage_1.default)(fullPath, thumbPath, width, height);
         return res.sendFile(path_1.default.resolve(thumbPath));
     }
-    catch (error) {
-        return res.status(500).send("Error processing image");
+    catch (_a) {
+        return res.status(500).json({ error: 'Error processing image' });
     }
 }));
 exports.default = router;

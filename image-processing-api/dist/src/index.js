@@ -6,12 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const images_1 = __importDefault(require("./routes/images"));
 const app = (0, express_1.default)();
-const port = 3000;
-app.use("/api/images", images_1.default);
-app.get("/", (req, res) => {
-    res.send("Server is running");
+app.use('/api/images', images_1.default);
+app.get('/', (req, res) => {
+    res.send('Server is running');
 });
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+if (require.main === module) {
+    app.listen(3000, () => {
+        console.log('Server running on port 3000');
+    });
+}
 exports.default = app;
