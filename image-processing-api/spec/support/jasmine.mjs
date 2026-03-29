@@ -1,0 +1,4 @@
+export default {
+  spec_dir: "dist/spec",
+  spec_files: ["*.js"]
+};
