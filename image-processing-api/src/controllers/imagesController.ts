@@ -5,41 +5,43 @@ import resizeImage from '../utilities/resizeImage';
 
 export const resizeImageHandler = async (req: Request, res: Response) => {
   const filename = req.query.filename as string;
-  const width = parseInt(req.query.width as string);
-  const height = parseInt(req.query.height as string);
+  const widthStr = req.query.width as string;
+  const heightStr = req.query.height as string;
 
-  //  Missing params
-  if (!filename || !width || !height) {
-    return res.status(400).send('Missing parameters');
+  // Missing filename
+  if (!filename) {
+    return res.status(400).json({ error: 'Missing filename parameter' });
   }
 
-  //  Invalid numbers
+  // Missing width or height
+  if (!widthStr || !heightStr) {
+    return res.status(400).json({ error: 'Missing width or height parameter(s)' });
+  }
+
+  // Invalid width/height values
+  const width = parseInt(widthStr, 10);
+  const height = parseInt(heightStr, 10);
   if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
-    return res.status(400).send('Invalid width or height');
+    return res.status(400).json({ error: 'Invalid width or height value(s). Must be positive numbers.' });
   }
 
-  const fullPath = path.resolve(`images/full/${filename}.jpg`);
-  const thumbPath = path.resolve(
-    `images/thumb/${filename}_${width}_${height}.jpg`,
-  );
+  const fullPath = path.join('assets/full', `${filename}.jpg`);
+  const thumbPath = path.join('assets/thumb', `${filename}_${width}_${height}.jpg`);
 
-  //  File not found
+  // Image file does not exist
   if (!fs.existsSync(fullPath)) {
-    return res.status(404).send('Image not found');
+    return res.status(404).json({ error: 'Image file not found' });
   }
 
   try {
-    // Cache
+    // Serve from cache if exists
     if (fs.existsSync(thumbPath)) {
-      console.log('Serving cached image');
-      return res.sendFile(thumbPath);
+      return res.sendFile(path.resolve(thumbPath));
     }
 
-    console.log('Processing image...');
     await resizeImage(fullPath, thumbPath, width, height);
-
-    return res.sendFile(thumbPath);
+    return res.sendFile(path.resolve(thumbPath));
   } catch {
-    return res.status(500).send('Error processing image');
+    return res.status(500).json({ error: 'Error processing image' });
   }
 };

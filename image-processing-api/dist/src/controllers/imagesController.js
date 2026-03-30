@@ -18,34 +18,38 @@ const fs_1 = __importDefault(require("fs"));
 const resizeImage_1 = __importDefault(require("../utilities/resizeImage"));
 const resizeImageHandler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filename = req.query.filename;
-    const width = parseInt(req.query.width);
-    const height = parseInt(req.query.height);
-    //  Missing params
-    if (!filename || !width || !height) {
-        return res.status(400).send('Missing parameters');
+    const widthStr = req.query.width;
+    const heightStr = req.query.height;
+    // Missing filename
+    if (!filename) {
+        return res.status(400).json({ error: 'Missing filename parameter' });
     }
-    //  Invalid numbers
+    // Missing width or height
+    if (!widthStr || !heightStr) {
+        return res.status(400).json({ error: 'Missing width or height parameter(s)' });
+    }
+    // Invalid width/height values
+    const width = parseInt(widthStr, 10);
+    const height = parseInt(heightStr, 10);
     if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
-        return res.status(400).send('Invalid width or height');
+        return res.status(400).json({ error: 'Invalid width or height value(s). Must be positive numbers.' });
     }
-    const fullPath = path_1.default.resolve(`images/full/${filename}.jpg`);
-    const thumbPath = path_1.default.resolve(`images/thumb/${filename}_${width}_${height}.jpg`);
-    //  File not found
+    const fullPath = path_1.default.join('assets/full', `${filename}.jpg`);
+    const thumbPath = path_1.default.join('assets/thumb', `${filename}_${width}_${height}.jpg`);
+    // Image file does not exist
     if (!fs_1.default.existsSync(fullPath)) {
-        return res.status(404).send('Image not found');
+        return res.status(404).json({ error: 'Image file not found' });
     }
     try {
-        // Cache
+        // Serve from cache if exists
         if (fs_1.default.existsSync(thumbPath)) {
-            console.log('Serving cached image');
-            return res.sendFile(thumbPath);
+            return res.sendFile(path_1.default.resolve(thumbPath));
         }
-        console.log('Processing image...');
         yield (0, resizeImage_1.default)(fullPath, thumbPath, width, height);
-        return res.sendFile(thumbPath);
+        return res.sendFile(path_1.default.resolve(thumbPath));
     }
     catch (_a) {
-        return res.status(500).send('Error processing image');
+        return res.status(500).json({ error: 'Error processing image' });
     }
 });
 exports.resizeImageHandler = resizeImageHandler;

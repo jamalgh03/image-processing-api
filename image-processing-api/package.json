@@ -5,7 +5,7 @@
     "start": "node dist/src/index.js",
     "build": "tsc",
     "test": "npm run build && jasmine",
-    "lint": "eslint src",
+    "lint": "eslint ../image-processing-api/src --ext .ts,.js",
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
