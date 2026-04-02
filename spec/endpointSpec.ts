@@ -1,10 +1,10 @@
 // @ts-ignore
-import * as supertest from "supertest";
+import supertest from "supertest";
 // @ts-ignore
-import app from "../image-processing-api/dist/src/index";
+import app from "../index";
 
 // @ts-ignore
-const request = supertest(app) as any;
+const request = supertest(app);
 
 describe("API Endpoint", () => {
   it("returns 200 with valid params", async () => {

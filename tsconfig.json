@@ -2,10 +2,12 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
+    "outDir": "dist",
+    "rootDir": ".",
     "esModuleInterop": true,
     "strict": true,
-    "types": ["jasmine", "node", "supertest", "express"],
-    "skipLibCheck": true
+    "types": ["jasmine", "node", "express"],
+    "declaration": true
   },
-  "include": ["spec/**/*"]
+  "include": ["src/**/*", "spec/**/*", "index.js", "index.ts"]
 }

@@ -2,29 +2,25 @@
   "name": "image-processing-api",
   "version": "1.0.0",
   "scripts": {
-    "start": "cd image-processing-api && node dist/src/index.js",
-    "build": "cd image-processing-api && tsc",
-    "test": "cd image-processing-api && npm run build && cd .. && jasmine",
-    "lint": "cd image-processing-api && eslint src",
-    "format": "prettier --write image-processing-api/src/**/*.ts"
+    "start": "node dist/src/index.js",
+    "build": "tsc",
+    "test": "npm run build && jasmine",
+    "lint": "eslint ../image-processing-api/src --ext .ts,.js",
+    "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "sharp": "^0.34.0"
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/jasmine": "^4.3.0",
     "@types/node": "^18.0.0",
-    "@types/supertest": "^7.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.57.2",
-    "@typescript-eslint/parser": "^8.57.2",
-    "eslint": "^9.39.4",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
+    "@types/supertest": "^6.0.0",
+    "eslint": "^8.0.0",
     "jasmine": "^4.5.0",
-    "prettier": "^3.8.1",
-    "supertest": "^7.1.3",
+    "prettier": "^2.8.0",
+    "supertest": "^6.3.0",
     "typescript": "^5.0.0"
   }
 }

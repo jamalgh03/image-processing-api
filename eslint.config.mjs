@@ -2,34 +2,35 @@ import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
-import { defineConfig } from "eslint/config";
 
-export default defineConfig([
+export default [
   {
     ignores: [
-      "image-processing-api/src/**/*.js",
-      "image-processing-api/src/**/*.d.ts",
-      "image-processing-api/dist/",
-      "image-processing-api/node_modules/",
-      "node_modules/",
       "dist/",
+      "node_modules/",
+      "**/*.d.ts"
     ],
   },
   {
     files: ["**/*.{js,mjs,cjs,jsx}"],
-    plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
+    languageOptions: { 
+      globals: globals.node 
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+    },
   },
   {
-    files: ["image-processing-api/src/**/*.ts"],
+    files: ["src/**/*.ts", "spec/**/*.ts"], 
     languageOptions: {
       parser: tsparser,
       globals: globals.node,
     },
-    plugins: { "@typescript-eslint": tseslint },
+    plugins: { 
+      "@typescript-eslint": tseslint 
+    },
     rules: {
       ...tseslint.configs.recommended.rules,
     },
   },
-]);
+];
