@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-ignore
 const supertest_1 = __importDefault(require("supertest"));
 // @ts-ignore
-const index_1 = __importDefault(require("../index"));
+const index_1 = __importDefault(require("../src/index"));
 // @ts-ignore
 const request = (0, supertest_1.default)(index_1.default);
 describe("API Endpoint", () => {

@@ -1,7 +1,7 @@
 // @ts-ignore
 import supertest from "supertest";
 // @ts-ignore
-import app from "../index";
+import app from "../src/index";
 
 // @ts-ignore
 const request = supertest(app);

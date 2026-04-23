@@ -18,7 +18,7 @@ const resizeImage = (inputPath, outputPath, width, height) => __awaiter(void 0, 
         yield (0, sharp_1.default)(inputPath).resize(width, height).toFile(outputPath);
         return true;
     }
-    catch (_a) {
+    catch {
         throw new Error('Resize failed');
     }
 });

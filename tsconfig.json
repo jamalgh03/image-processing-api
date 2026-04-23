@@ -9,5 +9,5 @@
     "types": ["jasmine", "node", "express"],
     "declaration": true
   },
-  "include": ["src/**/*", "spec/**/*", "index.js", "index.ts"]
+  "include": ["src/**/*", "spec/**/*", "src/index.ts"]
 }
